@@ -33,7 +33,6 @@ let nearestSection = sections[0];
 
 // Hamburger menu icon
 let menuIcon = document.querySelector(".icon.menu__link");
-console.log("menuIcon", menuIcon);
 /**
  * End Global Variables
  * Start Helper Functions
@@ -104,24 +103,19 @@ function hamburgerMenuListner() {
 
 // Scrolling listner
 function scrollListner(event) {
-  // Get nearest section to the top
+  // Get nearest section distance to the top
   let nearestSectionDisFromTop = getDistanceFromTop(nearestSection);
-  console.log("Nearest", nearestSection.getAttribute("id"));
-  console.log("nearestSectionDisFromTop", nearestSectionDisFromTop);
 
   for (let section of sections) {
     if (section == nearestSection) {
       continue;
     }
+    // get section distance from top
     disFromTop = getDistanceFromTop(section);
-    console.log(section.getAttribute("id"), disFromTop);
+    // if sectino distance from top is less than the nearest section from top
+    // set current section as the nearest section
+    // recalculate nearest section distance from top
     if (disFromTop < nearestSectionDisFromTop) {
-      console.log(
-        "Active section changed from",
-        nearestSection.getAttribute("id"),
-        "to",
-        section.getAttribute("id")
-      );
       nearestSection = section;
       nearestSectionDisFromTop = getDistanceFromTop(nearestSection);
 
@@ -131,11 +125,9 @@ function scrollListner(event) {
       let clickedLink = document.querySelector(
         "a[href='#" + nearestSection.getAttribute("id") + "']"
       );
-      console.log("clickedLink", clickedLink);
       setActiveLink(clickedLink);
     }
   }
-  console.log("Nearest", nearestSection.getAttribute("id"));
 }
 
 // build the nav
