@@ -22,18 +22,121 @@
  * Define Global Variables
  *
  */
+// List that will include navigation links
+const navList = document.getElementById("navbar__list");
+// navigation links
+const navSections = document.getElementsByClassName("menu__link");
+//  HTML sectio elements
+const sections = Array.from(document.getElementsByTagName("section"));
+//  Nearest section from top
+let nearestSection = sections[0];
 
+// Hamburger menu icon
+let menuIcon = document.querySelector(".icon.menu__link");
+console.log("menuIcon", menuIcon);
 /**
  * End Global Variables
  * Start Helper Functions
  *
  */
+// set active link style
+function setActiveLink(clickedLink) {
+  for (let navSection of navSections) {
+    navSection.classList.remove("active_section");
+  }
+  clickedLink.classList.add("active_section");
+}
 
+// set active section style
+function setActiveSection(selectedSection) {
+  //Remove active_section class from section
+  for (let section of sections) {
+    section.classList.remove("active_section");
+  }
+  // Add active_section class to selectedSection
+  selectedSection.classList.add("active_section");
+}
+
+// scroll to active/selected section
+function scrollToActiveSection(activeSection) {
+  activeSection.scrollIntoView({ block: "end", behavior: "smooth" });
+}
+
+function getDistanceFromTop(element) {
+  let margin = 170;
+  return Math.abs(
+    (element.getBoundingClientRect().bottom +
+      element.getBoundingClientRect().top) /
+      2 -
+      margin
+  );
+}
 /**
  * End Helper Functions
  * Begin Main Functions
  *
  */
+
+// menu links click listner
+const navClickListner = function (event) {
+  event.preventDefault();
+  // set active link
+  let clickedLink = event.target;
+  setActiveLink(clickedLink);
+  // set active section
+  let selectedSection = document.querySelector(
+    clickedLink.getAttribute("href")
+  );
+  setActiveSection(selectedSection);
+  // scroll to active section
+  scrollToActiveSection(selectedSection);
+};
+
+// Hamburger Menu listner
+function hamburgerMenuListner() {
+  var x = document.getElementById("myTopnav");
+  if (x.classList.contains("responsive")) {
+    x.classList.remove("responsive");
+  } else {
+    x.classList.add("responsive");
+  }
+}
+
+// Scrolling listner
+function scrollListner(event) {
+  // Get nearest section to the top
+  let nearestSectionDisFromTop = getDistanceFromTop(nearestSection);
+  console.log("Nearest", nearestSection.getAttribute("id"));
+  console.log("nearestSectionDisFromTop", nearestSectionDisFromTop);
+
+  for (let section of sections) {
+    if (section == nearestSection) {
+      continue;
+    }
+    disFromTop = getDistanceFromTop(section);
+    console.log(section.getAttribute("id"), disFromTop);
+    if (disFromTop < nearestSectionDisFromTop) {
+      console.log(
+        "Active section changed from",
+        nearestSection.getAttribute("id"),
+        "to",
+        section.getAttribute("id")
+      );
+      nearestSection = section;
+      nearestSectionDisFromTop = getDistanceFromTop(nearestSection);
+
+      // set active section
+      setActiveSection(nearestSection);
+      // set active link
+      let clickedLink = document.querySelector(
+        "a[href='#" + nearestSection.getAttribute("id") + "']"
+      );
+      console.log("clickedLink", clickedLink);
+      setActiveLink(clickedLink);
+    }
+  }
+  console.log("Nearest", nearestSection.getAttribute("id"));
+}
 
 // build the nav
 
@@ -44,11 +147,20 @@
  * Begin Events
  *
  */
+//Add eventListener to links
+for (let navSection of navSections) {
+  if (!navSection.classList.contains("icon")) {
+    navSection.addEventListener("click", navClickListner);
+  }
+}
+// Listen to scroll event
+document.addEventListener("scroll", scrollListner);
+
+// listen to hamburger menu click
+menuIcon.addEventListener("click", hamburgerMenuListner);
 
 // Build menu
-const navList = document.getElementById("navbar__list");
-const sections = Array.from(document.getElementsByTagName("section"));
-for (section of sections) {
+for (let section of sections) {
   // create list item per each section
   const listItem = document.createElement("li");
   // creat anchor element refer to each section
@@ -65,46 +177,4 @@ for (section of sections) {
 
   listItem.appendChild(anchorItem);
   navList.appendChild(listItem);
-}
-// Scroll to section on link click
-
-// Set sections as active
-
-const navSections = document.getElementsByClassName("menu__link");
-
-const navClickListner = function (event) {
-  event.preventDefault();
-  let selectedSection = document.querySelector(
-    event.target.getAttribute("href")
-  );
-  // Scroll to anchor ID using scrollIntoView event
-  selectedSection.scrollIntoView({ block: "end", behavior: "smooth" });
-
-  for (let navSection of navSections) {
-    navSection.classList.remove("active_section");
-  }
-
-  event.target.classList.add("active_section");
-  //Remove active_section class from section
-  for (let section of sections) {
-    section.classList.remove("active_section");
-  }
-  // Add active_section class to selectedSection
-  selectedSection.classList.add("active_section");
-};
-//Add eventListener to links
-for (let navSection of navSections) {
-  if (!navSection.classList.contains("icon")) {
-    navSection.addEventListener("click", navClickListner);
-  }
-}
-
-// Hamburger Menu
-function myFunction() {
-  var x = document.getElementById("myTopnav");
-  if (x.classList.contains("responsive")) {
-    x.classList.remove("responsive");
-  } else {
-    x.classList.add("responsive");
-  }
 }
