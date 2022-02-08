@@ -139,18 +139,6 @@ function scrollListner(event) {
  * Begin Events
  *
  */
-//Add eventListener to links
-for (let navSection of navSections) {
-  if (!navSection.classList.contains("icon")) {
-    navSection.addEventListener("click", navClickListner);
-  }
-}
-// Listen to scroll event
-document.addEventListener("scroll", scrollListner);
-
-// listen to hamburger menu click
-menuIcon.addEventListener("click", hamburgerMenuListner);
-
 // Build menu
 for (let section of sections) {
   // create list item per each section
@@ -170,3 +158,15 @@ for (let section of sections) {
   listItem.appendChild(anchorItem);
   navList.appendChild(listItem);
 }
+
+//Add eventListener to links
+for (let navSection of navSections) {
+  if (!navSection.classList.contains("icon")) {
+    navSection.addEventListener("click", navClickListner);
+  }
+}
+// Listen to scroll event
+document.addEventListener("scroll", scrollListner);
+
+// listen to hamburger menu click
+menuIcon.addEventListener("click", hamburgerMenuListner);
