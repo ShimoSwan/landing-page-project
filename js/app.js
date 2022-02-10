@@ -58,7 +58,7 @@ function setActiveSection(selectedSection) {
 
 // scroll to active/selected section
 function scrollToActiveSection(activeSection) {
-  activeSection.scrollIntoView({ block: "end", behavior: "smooth" });
+  activeSection.scrollIntoView({ block: "center", behavior: "smooth" });
 }
 
 function getDistanceFromTop(element) {
@@ -93,7 +93,7 @@ const navClickListner = function (event) {
 
 // Hamburger Menu listner
 function hamburgerMenuListner() {
-  var x = document.getElementById("myTopnav");
+  let x = document.getElementById("myTopnav");
   if (x.classList.contains("responsive")) {
     x.classList.remove("responsive");
   } else {
