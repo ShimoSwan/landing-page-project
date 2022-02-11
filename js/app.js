@@ -92,7 +92,8 @@ const navClickListner = function (event) {
 };
 
 // Hamburger Menu listner
-function hamburgerMenuListner() {
+function hamburgerMenuListner(event) {
+  event.stopPropagation();
   let x = document.getElementById("myTopnav");
   if (x.classList.contains("responsive")) {
     x.classList.remove("responsive");
@@ -170,3 +171,4 @@ document.addEventListener("scroll", scrollListner);
 
 // listen to hamburger menu click
 menuIcon.addEventListener("click", hamburgerMenuListner);
+document.addEventListener("click", hamburgerMenuListner);

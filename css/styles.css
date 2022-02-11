@@ -83,12 +83,6 @@ section {
   color: #000;
 }
 
-.navbar__menu .menu__link:hover {
-  background: #333;
-  color: #fff;
-  transition: ease 0.3s all;
-}
-
 .topnav {
   overflow: hidden;
   /* background-color: #333; */
@@ -262,7 +256,7 @@ section.active_section .landing__container::after {
   }
 
   .page__header {
-    position: inherit;
+    position: fixed;
   }
 }
 
